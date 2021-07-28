@@ -16,17 +16,20 @@ column1 = dbc.Col(
         dcc.Markdown(
             """
         
-            ## Your Value Proposition
+            ## Use Data to Predict the Success of Your Kickstarter Campaign
 
-            Emphasize how the app will benefit users. Don't emphasize the underlying technology.
+            What are the factors that influence whether or not your 
+            Kickstarter Campaign will succeed or fail? 
+            
+            Can you make simple changes to your Kickstarter Campaign and
+            increase the likelihood that it will be funded?
 
-            ✅ RUN is a running app that adapts to your fitness levels and designs personalized workouts to help you improve your running.
-
-            ❌ RUN is the only intelligent running app that uses sophisticated deep neural net machine learning to make your run smarter because we believe in ML driven workouts.
-
+            This Kickstarter Campaign Success app allows you to do just that:
+            adjust several inputs and see how likely it is that your campaign 
+            will be funded. All based on data from prior Kickstarter Campaigns!
             """
         ),
-        dcc.Link(dbc.Button('Your Call To Action', color='primary'), href='/predictions')
+        dcc.Link(dbc.Button('Predict Your Success', color='primary'), href='/predictions')
     ],
     md=4,
 )
