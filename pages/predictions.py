@@ -31,6 +31,28 @@ column1 = dbc.Col(
 
             """
         ),
+        dcc.Markdown('#### Category'), 
+        dcc.Dropdown(
+            id='category', 
+            options = [
+                {'label': 'Poetry', 'value': 'Poetry'}, 
+                # {'label': 'Comics', 'value': 'Comics'}, 
+                # {'label': 'Crafts', 'value': 'Crafts'}, 
+                # {'label': 'Dance', 'value': 'Dance'}, 
+                # {'label': 'Design', 'value': 'Design'},
+                # {'label': 'Fashion', 'value': 'Fashion'}, 
+                # {'label': 'Film & Video', 'value': 'Film & Video'}, 
+                # {'label': 'Food', 'value': 'Food'}, 
+                # {'label': 'Games', 'value': 'Games'}, 
+                # {'label': 'Journalism', 'value': 'Journalism'},
+                # {'label': 'Music', 'value': 'Music'},
+                # {'label': 'Photography', 'value': 'Photography'},
+                # {'label': 'Publishing', 'value': 'Publishing'},
+                # {'label': 'Technology', 'value': 'Technology'},
+                # {'label': 'Theater', 'value': 'Theater'}, 
+            ], 
+            className='mb-3',
+        ),
         dcc.Markdown('#### Main Category'), 
         dcc.Dropdown(
             id='main_category', 
@@ -133,27 +155,27 @@ column1 = dbc.Col(
 
 column2 = dbc.Col(
     [
-        html.H2('Expected Campaign Result:', className='mb-5', 
+        html.H2('Expected Campaign Result:', className='mb-3', 
                  style={'textAlign': 'center'}), 
         html.Div(id='prediction-content', className='lead', 
                  style={'textAlign': 'center', 'font-weight': 'bold'}),
         html.Div(id='prediction-image')
     ],
 
-    md = 4
+    md = 6
 )
 
 @app.callback(
     Output('prediction-content', 'children'),
-    [Input('main_category', 'value'), Input('currency', 'value'),
+    [Input('category', 'value'), Input('main_category', 'value'), Input('currency', 'value'),
      Input('goal', 'value'), Input('country', 'value'), 
      Input('duration_days', 'value')],
 )
-def predict(main_category, currency, goal, country, duration_days):
+def predict(category, main_category, currency, goal, country, duration_days):
     df = pd.DataFrame(
-        columns=['main_category', 'currency', 'goal', 'country', 
+        columns=['category', 'main_category', 'currency', 'goal', 'country', 
                  'duration_days'], 
-        data=[[main_category, currency, goal, country, duration_days]]
+        data=[[category, main_category, currency, goal, country, duration_days]]
     )
     y_pred = pipeline.predict(df)[0]
     if y_pred == 1:
@@ -165,22 +187,24 @@ def predict(main_category, currency, goal, country, duration_days):
 
 @app.callback(
     Output('prediction-image', 'children'),
-    [Input('main_category', 'value'), Input('currency', 'value'),
+    [Input('category', 'value'), Input('main_category', 'value'), Input('currency', 'value'),
      Input('goal', 'value'), Input('country', 'value'), 
      Input('duration_days', 'value')],
 )
-def predict_image(main_category, currency, goal, country, duration_days):
+def predict_image(category, main_category, currency, goal, country, duration_days):
     df = pd.DataFrame(
-        columns=['main_category', 'currency', 'goal', 'country', 
+        columns=['category', 'main_category', 'currency', 'goal', 'country', 
                  'duration_days'], 
-        data=[[main_category, currency, goal, country, duration_days]]
+        data=[[category, main_category, currency, goal, country, duration_days]]
     )
     y_pred = pipeline.predict(df)[0]
     if y_pred == 1:
         return html.Img(src='assets/funded_with_kickstarter_badge.png',
-        className='img-fluid', style = {'height': '400px'})
+        className='img-fluid', style = {'height': '450px', 
+                                        'width': '450px'})
     else:
         return html.Img(src='assets/not_funded_with_kickstarter_badge.png',
-        className='img-fluid', style = {'height': '400px'})
+        className='img-fluid', style = {'height': '450px', 
+                                        'width': '450px'})
 
 layout = dbc.Row([column1, column2])

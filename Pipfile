@@ -12,7 +12,12 @@ gunicorn = "*"
 plotly = "*"
 pandas = "*"
 dash-daq = "*"
-joblib = "*"
+joblib = "==1.0.1"
+cython = "*"
+numpy = "*"
+category-encoders = "==2.2.2"
+xgboost = "==0.90"
+scikit-learn = "==0.22.2.post1"
 
 [requires]
 python_version = "3"
